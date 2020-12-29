@@ -2,33 +2,10 @@
 import re
 
 def get_syllables(word):
-
-    """
-    # Trying to make this python be the equivilent of this javascript: 
-    const syllableRegex = /[^aeiouy]*[aeiouy]+(?:[^aeiouy]*$|[^aeiouy](?=[^aeiouy]))?/gi;
-    function syllabify(word) {
-        word = word.trim();
-        const syllables = word.match(syllableRegex);
-        return syllables;
-    }
-    """
-
-    # matched = re.search('(/[^aeiouy]*[aeiouy]+(?:[^aeiouy]*$|[^aeiouy](?=[^aeiouy]))?/gi)', word)
-
-    # this returns ('kit') from 'kittycat'
-
-    matched = re.search('([^aeiouy]*[aeiouy]+(?:[^aeiouy]*$|[^aeiouy](?=[^aeiouy])))?', word)
-    if matched:
-        tokens = matched.groups()
-        print(tokens) 
-        print("YAY from {}".format( word ))
-    else:
-        print("NOPE from {}". format( word ))
-    return ['kit', 'ty', 'cat']
-
-
-
-
+    # given 'kittycat' return ['kit', 'ty', 'cat]
+    regex = '[^aeiouy]*[aeiouy]+(?:[^aeiouy]*$|[^aeiouy](?=[^aeiouy]))?'
+    x = re.findall(regex, word)
+    return x 
 
 
 def get_lines_from_file(filename):
