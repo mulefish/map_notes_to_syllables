@@ -13,9 +13,17 @@ def get_syllables(word):
     }
     """
 
-    # matched = re.search('/[^aeiouy]*[aeiouy]+(?:[^aeiouy]*$|[^aeiouy](?=[^aeiouy]))?/gi', str)
+    # matched = re.search('(/[^aeiouy]*[aeiouy]+(?:[^aeiouy]*$|[^aeiouy](?=[^aeiouy]))?/gi)', word)
 
-    # hard coding this success thing for now. 
+    # this returns ('kit') from 'kittycat'
+
+    matched = re.search('([^aeiouy]*[aeiouy]+(?:[^aeiouy]*$|[^aeiouy](?=[^aeiouy])))?', word)
+    if matched:
+        tokens = matched.groups()
+        print(tokens) 
+        print("YAY from {}".format( word ))
+    else:
+        print("NOPE from {}". format( word ))
     return ['kit', 'ty', 'cat']
 
 
