@@ -3,25 +3,6 @@ from read import get_syllables, collect_syllables, shuffle_array_of_objects, dis
 
 class TheTests(unittest.TestCase):
 
-    def test_exhausting_list(self):
-        given = [
-            {'syllable':'a'}, 
-            {'syllable':'b'}, 
-            {'syllable':'c'}, 
-            {'syllable':'d'}, 
-            {'syllable':'e'}, 
-            {'syllable':'f'}, 
-            {'syllable':'g'}, 
-            {'syllable':'h'}, 
-            {'syllable':'i'}, 
-            {'syllable':'j'}, 
-            {'syllable':'k'}, 
-            {'syllable':'l'}, 
-        ]
-
-        isOk = True
-        self.assertEqual(True, isOk)
-
 
     def test_distribute_files_across_syllables(self):
         wav_files = ['a', 'b', 'c']
