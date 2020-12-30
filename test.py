@@ -1,7 +1,112 @@
 import unittest
-from read import get_syllables, collect_syllables
+from read import get_syllables, collect_syllables, shuffle_array_of_objects, distribute_files_across_syllables
 
 class TheTests(unittest.TestCase):
+
+    def test_exhausting_list(self):
+        given = [
+            {'syllable':'a'}, 
+            {'syllable':'b'}, 
+            {'syllable':'c'}, 
+            {'syllable':'d'}, 
+            {'syllable':'e'}, 
+            {'syllable':'f'}, 
+            {'syllable':'g'}, 
+            {'syllable':'h'}, 
+            {'syllable':'i'}, 
+            {'syllable':'j'}, 
+            {'syllable':'k'}, 
+            {'syllable':'l'}, 
+        ]
+
+        isOk = True
+        self.assertEqual(True, isOk)
+
+
+    def test_distribute_files_across_syllables(self):
+        wav_files = ['a', 'b', 'c']
+        syllables_count_map = {
+            'z':1,
+            'y':1,
+            'x':1,
+            'w':3,
+            'v':4,
+            'u':20,
+            't':6,
+            's':7,
+            'r':4
+        }
+
+
+    def test_shuffle_array_of_objects(self):
+        given = [
+            {'syllable':'a'}, 
+            {'syllable':'b'}, 
+            {'syllable':'c'}, 
+            {'syllable':'d'}, 
+            {'syllable':'e'}, 
+            {'syllable':'f'}, 
+            {'syllable':'g'}, 
+            {'syllable':'h'}, 
+            {'syllable':'i'}, 
+            {'syllable':'j'}, 
+            {'syllable':'k'}, 
+            {'syllable':'l'}, 
+        ]
+        # If not shuffled then the 'syllable' keys will yield 'abcdefghijkl'. Do not want that. 
+        not_expected = 'abcdefghijkl'
+        array_of_objs = shuffle_array_of_objects(given)
+        actual = ''
+        for obj in array_of_objs:
+            actual += obj['syllable']
+        isOk = not_expected != actual
+        self.assertEqual(True, isOk)
+
+
+    def test_sort_(self):
+        # map = syllable and its count in the corpus
+        # Note: The map is much larger than the array of possible wav files 
+        syllable_count_map = {
+            'pretty_common1': 2,
+            'pretty_common2': 2,
+            'super_common': 10,
+            'unque1':1,
+            'unque2':1,
+            'unque3':1,
+            'unque4':1,
+            'unque5':1,
+            'unque6':1,
+            'unque7':1,
+            'unque8':1,
+            'unque9':1,
+            'unque10':1,
+            'unque11':1,
+            'unque12':1,
+            'unque13':1,
+            'unque14':1,
+            'unque15':1,
+            'unque16':1,
+            'unque17':1,
+            'unque18':1,
+            'unque19':1,
+
+        }
+        possible_wav_files = [
+            'one.wav',
+            'two.wav',
+            'three.wav',
+            'four.wav',
+            'one.wav',
+            'one.wav',
+            'one.wav',
+            'one.wav',
+            'one.wav',
+            'one.wav',
+            'one.wav',
+            'one.wav',
+
+        ]
+
 
     def test_get_collection_from_list_of_words(self):
         given = [
@@ -33,8 +138,8 @@ class TheTests(unittest.TestCase):
             'hty':  1 
         }
 
-        print("expected len {} ".format( len( expected )))
-        print("actual len {} ".format( len( actual )))
+        # print("expected len {} ".format( len( expected )))
+        # print("actual len {} ".format( len( actual )))
         isOk = True 
         for k in expected:
             actual_count = actual[k]
@@ -50,8 +155,8 @@ class TheTests(unittest.TestCase):
         actual = get_syllables(given)
         self.assertEqual(actual, expected)
 
-    def test_get_3_syllables_mixCase(self):
-        given = 'kittyCAt'
+    def test_get_3_syllables_with_mixCase_and_paddingSpaces(self):
+        given = '  kittyCAt       '
         expected = 3
         actual = len(get_syllables(given)) 
         self.assertEqual(actual, expected)
