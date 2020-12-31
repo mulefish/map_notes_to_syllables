@@ -1,5 +1,5 @@
 import unittest
-from main import get_syllables, collect_syllables, shuffle_array_of_objects, find_budget, wavs_buy_cheap_syllables, display_to_stout
+from main import get_syllables, collect_syllables, shuffle_array_of_objects, find_budget, wavs_buy_syllables, display_to_stout
 
 class TheTests(unittest.TestCase):
 
@@ -23,9 +23,11 @@ class TheTests(unittest.TestCase):
         # set up 
         result = find_budget(syllables_cost_map, wav_files)
         budget = result["budget"]
-        results = wavs_buy_cheap_syllables(syllables_cost_map, wav_files, budget)
+        results = wavs_buy_syllables(syllables_cost_map, wav_files, budget)
         files_and_syllables = results["files_and_syllables"]
-        map = display_to_stout( files_and_syllables)
+
+        # now test the thing
+        map = display_to_stout( files_and_syllables, syllables_cost_map)
         isOk = len(map) == 12 
         self.assertEqual(True, isOk)
 
@@ -51,7 +53,7 @@ class TheTests(unittest.TestCase):
         budget = result["budget"]
 
         # now test the thing
-        results = wavs_buy_cheap_syllables(syllables_cost_map, wav_files, budget)
+        results = wavs_buy_syllables(syllables_cost_map, wav_files, budget)
         count_of_wavs_which_bought_nothing = results["count_of_wavs_which_bought_nothing"]
         count_unpurchased_syllables = len(results["unpurchased_syllables"])
 
@@ -107,51 +109,6 @@ class TheTests(unittest.TestCase):
             actual += obj['syllable']
         isOk = not_expected != actual
         self.assertEqual(True, isOk)
-
-
-    def test_sort_(self):
-        # map = syllable and its count in the corpus
-        # Note: The map is much larger than the array of possible wav files 
-        syllable_count_map = {
-            'pretty_common1': 2,
-            'pretty_common2': 2,
-            'super_common': 10,
-            'unque1':1,
-            'unque2':1,
-            'unque3':1,
-            'unque4':1,
-            'unque5':1,
-            'unque6':1,
-            'unque7':1,
-            'unque8':1,
-            'unque9':1,
-            'unque10':1,
-            'unque11':1,
-            'unque12':1,
-            'unque13':1,
-            'unque14':1,
-            'unque15':1,
-            'unque16':1,
-            'unque17':1,
-            'unque18':1,
-            'unque19':1,
-
-        }
-        possible_wav_files = [
-            'one.wav',
-            'two.wav',
-            'three.wav',
-            'four.wav',
-            'one.wav',
-            'one.wav',
-            'one.wav',
-            'one.wav',
-            'one.wav',
-            'one.wav',
-            'one.wav',
-            'one.wav',
-
-        ]
 
 
     def test_get_collection_from_list_of_words(self):

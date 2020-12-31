@@ -8,28 +8,27 @@ We have many unique syllables and a few wavfiles. Each wavfile will purchase 1 o
 Each syllable has its own cost ( determined by how common it is - the more common the more expensive )
 """
 
-def display_to_stout(files_and_syllables):
+def display_to_stout(files_and_syllables, syllables_cost_map):
     """
     Convert from something like this: 
     [{'syllables': ['e', 'f'], 'budget': -8, 'filename': 'b'}
         {'syllables': ['g', 'h'], 'budget': 3, 'filename': 'c'}
         {'syllables': ['a', 'i', 'l', 'k', 'j', 'b', 'd', 'c'], 'budget': 1, 'filename': 'a'}] 
     
-    to something like this: 
-
+    to something javascript friendly like this: 
     {
-        'e':'b',
-        'f':'b',
-        'g':'c',
-        'h':'c',
-        'a':'a',
-        'i':'a',
-        'l':'a',
-        'k':'a',
-        'j':'a',
-        'b':'a',
-        'd':'a',
-        'c':'a'
+    'a':{'count': 1, 'file': 'a'},
+    'c':{'count': 1, 'file': 'a'},
+    'b':{'count': 1, 'file': 'a'},
+    'e':{'count': 4, 'file': 'c'},
+    'd':{'count': 3, 'file': 'a'},
+    'g':{'count': 6, 'file': 'b'},
+    'f':{'count': 20, 'file': 'b'},
+    'i':{'count': 4, 'file': 'a'},
+    'h':{'count': 7, 'file': 'c'},
+    'k':{'count': 1, 'file': 'a'},
+    'j':{'count': 1, 'file': 'a'},
+    'l':{'count': 3, 'file': 'a'}
     }
     """
     map = {} 
@@ -41,27 +40,16 @@ def display_to_stout(files_and_syllables):
     print("\n{")
     i = 0
     for k in map: 
+        payload = {"file":map[k], "count":syllables_cost_map[k]}
         if i < len(map) - 1:
-            print("'{}':'{}',".format(k, map[k]))
+            print("'{}':{},".format(k, payload))
         else:
-            print("'{}':'{}'".format(k, map[k]))
-
+            print("'{}':{}".format(k, payload))
         i += 1 
     print("}")
-
     return map 
 
-
-
-
-    for fas in files_and_syllables:
-        print( fas )
-
-    return {} 
-
-
-
-def wavs_buy_cheap_syllables(syllables_costs_map, array_of_wavfiles, budget):
+def wavs_buy_syllables(syllables_costs_map, array_of_wavfiles, budget):
 
     """
     step1: convert from a simply key-value map of 'syllable names' and 'costs' to a
@@ -256,8 +244,12 @@ if __name__ == "__main__":
     Anyhow, only acutally care about the 'budget' value that is on the results_map
     """
     results_map = find_budget(syllables_costs_map, wavs_array) 
+
+    # {'most_seen_count': 425, 'most_seen_syllable': 're', 'number_of_syllables_per_wav': 55, 'budget': 275, 'ave_cost': 5}
+    # print(results_map)
+    
     budget = results_map['budget']
-    results = wavs_buy_cheap_syllables(syllables_costs_map, wavs_array, budget)
+    results = wavs_buy_syllables(syllables_costs_map, wavs_array, budget)
     files_and_syllables = results["files_and_syllables"]
-    display_to_stout(files_and_syllables)
+    display_to_stout(files_and_syllables, syllables_costs_map)
     print("The end")
