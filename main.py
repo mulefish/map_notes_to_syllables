@@ -8,6 +8,59 @@ We have many unique syllables and a few wavfiles. Each wavfile will purchase 1 o
 Each syllable has its own cost ( determined by how common it is - the more common the more expensive )
 """
 
+def display_to_stout(files_and_syllables):
+    """
+    Convert from something like this: 
+    [{'syllables': ['e', 'f'], 'budget': -8, 'filename': 'b'}
+        {'syllables': ['g', 'h'], 'budget': 3, 'filename': 'c'}
+        {'syllables': ['a', 'i', 'l', 'k', 'j', 'b', 'd', 'c'], 'budget': 1, 'filename': 'a'}] 
+    
+    to something like this: 
+
+    {
+        'e':'b',
+        'f':'b',
+        'g':'c',
+        'h':'c',
+        'a':'a',
+        'i':'a',
+        'l':'a',
+        'k':'a',
+        'j':'a',
+        'b':'a',
+        'd':'a',
+        'c':'a'
+    }
+    """
+    map = {} 
+    for obj in files_and_syllables:
+        filename = obj["filename"]
+        for syllabol in obj["syllables"]:
+            map[syllabol] = filename 
+
+    print("\n{")
+    i = 0
+    for k in map: 
+        if i < len(map) - 1:
+            print("'{}':'{}',".format(k, map[k]))
+        else:
+            print("'{}':'{}'".format(k, map[k]))
+
+        i += 1 
+    print("}")
+
+    return map 
+
+
+
+
+    for fas in files_and_syllables:
+        print( fas )
+
+    return {} 
+
+
+
 def wavs_buy_cheap_syllables(syllables_costs_map, array_of_wavfiles, budget):
 
     """
@@ -113,27 +166,6 @@ def recurse(obj, syllables, loop):
         recurse( obj, syllables, loop )
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 def find_budget(syllables_costs_map, array_of_wavfiles):
     """
     find the ave cost. 
@@ -225,6 +257,7 @@ if __name__ == "__main__":
     """
     results_map = find_budget(syllables_costs_map, wavs_array) 
     budget = results_map['budget']
-
-
-    
+    results = wavs_buy_cheap_syllables(syllables_costs_map, wavs_array, budget)
+    files_and_syllables = results["files_and_syllables"]
+    display_to_stout(files_and_syllables)
+    print("The end")

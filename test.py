@@ -1,23 +1,88 @@
 import unittest
-from read import get_syllables, collect_syllables, shuffle_array_of_objects, distribute_files_across_syllables
+from main import get_syllables, collect_syllables, shuffle_array_of_objects, find_budget, wavs_buy_cheap_syllables, display_to_stout
 
 class TheTests(unittest.TestCase):
 
 
-    def test_distribute_files_across_syllables(self):
+    def test_display(self):
         wav_files = ['a', 'b', 'c']
-        syllables_count_map = {
-            'z':1,
-            'y':1,
-            'x':1,
-            'w':3,
-            'v':4,
-            'u':20,
-            't':6,
-            's':7,
-            'r':4
+        syllables_cost_map = {
+            'a':1,
+            'b':1,
+            'c':1,
+            'd':3,
+            'e':4,
+            'f':20,
+            'g':6,
+            'h':7,
+            'i':4,
+            'j':1,
+            'k':1,
+            'l':3,
+        }
+        # set up 
+        result = find_budget(syllables_cost_map, wav_files)
+        budget = result["budget"]
+        results = wavs_buy_cheap_syllables(syllables_cost_map, wav_files, budget)
+        files_and_syllables = results["files_and_syllables"]
+        map = display_to_stout( files_and_syllables)
+        isOk = len(map) == 12 
+        self.assertEqual(True, isOk)
+
+    def test_wavs_buy_syllables(self):
+        wav_files = ['a', 'b', 'c']
+        syllables_cost_map = {
+            'a':1,
+            'b':1,
+            'c':1,
+            'd':3,
+            'e':4,
+            'f':20,
+            'g':6,
+            'h':7,
+            'i':4,
+            'j':1,
+            'k':1,
+            'l':3,
         }
 
+        # get the budet
+        result = find_budget(syllables_cost_map, wav_files)
+        budget = result["budget"]
+
+        # now test the thing
+        results = wavs_buy_cheap_syllables(syllables_cost_map, wav_files, budget)
+        count_of_wavs_which_bought_nothing = results["count_of_wavs_which_bought_nothing"]
+        count_unpurchased_syllables = len(results["unpurchased_syllables"])
+
+        isOk = count_of_wavs_which_bought_nothing == 0 and count_unpurchased_syllables == 0
+        self.assertEqual(True, isOk)
+
+    def test_find_budget(self):
+
+        # Given 3 wav files and 9 syllables where the ave cost of a syllable is 5 find a budget of 15 ( to be given to each wav file later on )
+
+        wav_files = ['a', 'b', 'c']
+        syllables_cost_map = {
+            'a':1,
+            'b':1,
+            'c':1,
+            'd':3,
+            'e':4,
+            'f':20,
+            'g':6,
+            'h':7,
+            'i':4
+        }
+        expected = 15
+        # The real answer would be 15.2333 or something like that. Don't care. int 15 is good.
+        # I do not really care about the float, but I am vaguely curious _why_ I am getting an int back. 
+
+        # actual = find_budget(syllables_cost_map, wav_files)
+        result = find_budget(syllables_cost_map, wav_files)
+        actual = result["budget"]
+        isOk = expected is actual
+        self.assertEqual(True, isOk)
 
     def test_shuffle_array_of_objects(self):
         given = [
