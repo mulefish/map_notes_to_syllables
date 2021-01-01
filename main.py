@@ -138,7 +138,7 @@ def wavs_buy_syllables(syllables_costs_map, array_of_wavfiles, budget):
 
     return results
 
-LOOP_LIMIT = 40
+LOOP_LIMIT = 100
 def recurse(obj, syllables, loop):
     loop += 1 
 
