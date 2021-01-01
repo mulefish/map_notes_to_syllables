@@ -151,7 +151,8 @@ def recurse(obj, syllables, loop):
                     obj["budget"] -= cost
                     item["purchased"] = True 
                     obj["syllables"].append(item["syllable"])
-        recurse( obj, syllables, loop )
+        if obj["budget"] > 0:            
+            recurse( obj, syllables, loop )
 
 
 def find_budget(syllables_costs_map, array_of_wavfiles):
